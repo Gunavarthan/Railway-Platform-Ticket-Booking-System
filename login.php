@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PNR Input</title>
+    <title>My train</title>
     <link rel="stylesheet" href="stylelg.css">
     <style>
         body {
@@ -23,7 +23,7 @@
         <form method="POST" action="">
             <div class="form-group">
                 <label for="PNR">PNR:</label>
-                <input type="text" id="PNR" name="PNR" required>
+                <input type="text" id="PNR" name="PNR" required>                <!--Getting inputs for the PNR-->
             </div>
             <div class="form-group">
                 <button type="submit">Submit</button>
@@ -34,13 +34,13 @@
 
             if (isset($_POST["PNR"])) {
                 $PNR = mysqli_real_escape_string($con, $_POST["PNR"]);
-                $query = "SELECT * FROM pnr WHERE PNR='$PNR'";
+                $query = "SELECT * FROM pnr WHERE PNR='$PNR'";                   //selecting rows with same PNR value
                 $result = mysqli_query($con, $query);
 
                 if (mysqli_num_rows($result) > 0) {
-                    echo "<script>window.location.href='ticketinput.php';</script>";
+                    echo "<script>window.location.href='ticketinput.php';</script>";    //if Result rows is greater than 0 then Redirect to Next Page
                 } else {
-                    echo "<div class='alert'>PNR not found</div>";
+                    echo "<div class='alert'>PNR not found</div>";              //Else return a Error Message
                 }
             }
 
