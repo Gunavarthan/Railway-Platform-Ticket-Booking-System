@@ -1,9 +1,9 @@
 <?php
-$con = mysqli_connect("localhost", "root", "guna", "train");
+$con = mysqli_connect("localhost", "root", "PASSWORD", "train");            //Enter your PASSWORD 
 
 if (isset($_POST["submit"])) {
-    // Fetch data from the form
-    $numChildren = intval($_POST["numChildren"]); // Convert to integer
+    // Receiving data from the form
+    $numChildren = intval($_POST["numChildren"]); 
     $platformNumber = $_POST["platformNumber"];
     $totalGuests = intval($_POST["GuestNumber"]); // Convert to integer
 
@@ -20,8 +20,8 @@ if (isset($_POST["submit"])) {
 
     // Loop through guest inputs and store names and Aadhar numbers
     for ($i = 1; $i <= min(5, $totalGuests); $i++) {
-        $guestNames[] = isset($_POST["guestName$i"]) ? $_POST["guestName$i"] : "";
-        $aadharNumbers[] = isset($_POST["guestAadhar$i"]) ? $_POST["guestAadhar$i"] : "";
+        $guestNames[] = isset($_POST["guestName$i"]) ? $_POST["guestName$i"] : "";              //if input is given or initialized value is added to array
+        $aadharNumbers[] = isset($_POST["guestAadhar$i"]) ? $_POST["guestAadhar$i"] : "";       //Else the empty string is stored 
     }
 
     // Construct the SQL query
@@ -63,7 +63,7 @@ if (isset($_POST["submit"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guest Information</title>
+    <title>MY Train</title>
     <link rel="stylesheet" href="stylelg.css">
     <style>
         body {
@@ -78,13 +78,12 @@ if (isset($_POST["submit"])) {
     <div class="container">
         <h1>Guest Information Form</h1>
         <form id="guestForm" method="post">
-            <!-- Additional guest inputs will be added here -->
             <div class="guest-input">
                 <label for="guestName1">Guest Name:</label>
                 <input type="text" id="guestName1" name="guestName1" placeholder="Enter guest name" required>
                 <label for="guestAadhar1">Aadhar Number:</label>
                 <input type="text" id="guestAadhar1" name="guestAadhar1" placeholder="Enter Aadhar number" required>
-                <button type="button" onclick="addGuest()" ${guestCount === 5 ? 'disabled' : ''}>Add Guest</button>
+                <button type="button" onclick="addGuest()">Add Guest</button>
                 <button type="button" onclick="removeGuest(this)">Remove Guest</button>
                 <hr>
             </div>
@@ -100,35 +99,35 @@ if (isset($_POST["submit"])) {
                 <label for="platformNumber">Platform Number:</label>
                 <input type="text" id="platformNumber" name="platformNumber" placeholder="Enter platform number" style="width: calc(50% - 20px);" required>
             </div>
-            <button type="submit" class="submit-button" name="submit" >Submit</button>
+            <button type="submit" class="submit-button" name="submit">Submit</button>
         </form>
     </div>
 
     <script>
-        let guestCount = 1;
+        let guestCount = 1;                         //initializing guest count
 
         function addGuest() {
             if (guestCount < 5) {
                 guestCount++;
-                const guestDiv = document.createElement("div");
+                const guestDiv = document.createElement("div");        //creating DOM element div and storing in constant guestDiv
                 guestDiv.className = "guest-input";
                 guestDiv.innerHTML = `
                     <label for="guestName${guestCount}">Guest Name:</label>
                     <input type="text" id="guestName${guestCount}" name="guestName${guestCount}" placeholder="Enter guest name" required>
                     <label for="guestAadhar${guestCount}">Aadhar Number:</label>
                     <input type="text" id="guestAadhar${guestCount}" name="guestAadhar${guestCount}" placeholder="Enter Aadhar number" required>
-                    <button type="button" onclick="addGuest()" ${guestCount === 5 ? 'disabled' : ''}>Add Guest</button>
+                    <button type="button" onclick="addGuest()" ${guestCount === 5 ? 'disabled' : ''}>Add Guest</button>             
                     <button type="button" onclick="removeGuest(this)">Remove Guest</
                     <hr>
-                `;
-                document.getElementById("guestForm").insertBefore(guestDiv, document.getElementById("numChildren").parentElement);
+                `;                //{guestCount === 5 ? 'disabled' : ''} -> Checks if the guest count is greater than 5 button is disabled 
+                document.getElementById("guestForm").insertBefore(guestDiv, document.getElementById("numChildren").parentElement);      //inserting the DOM element guestDiv before numChildren
             }
         }
 
         function removeGuest(button) {
-            const guestDiv = button.parentElement;
-            if (guestCount > 1) {
-                guestDiv.remove();
+            const guestDiv = button.parentElement;          //initializing the guestDiv as parent of button 
+            if (guestCount > 1) {                           // if Guest input is more then 1 
+                guestDiv.remove();                          //then allow to remove the guestDiv element from the DOM
                 guestCount--;
             }
         }
