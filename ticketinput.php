@@ -1,11 +1,11 @@
 <?php
-$con = mysqli_connect("localhost", "root", "PASSWORD", "train");            //Enter your PASSWORD 
+$con = mysqli_connect("localhost", "root", "guna", "train");
 
-if (isset($_POST["submit"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Receiving data from the form
     $numChildren = intval($_POST["numChildren"]); 
     $platformNumber = $_POST["platformNumber"];
-    $totalGuests = intval($_POST["GuestNumber"]); // Convert to integer
+    $totalGuests = intval($_POST["guestCount"]); // Get guest count from the request
 
     // Initialize variables for SQL query
     $query = "";
@@ -24,36 +24,30 @@ if (isset($_POST["submit"])) {
         $aadharNumbers[] = isset($_POST["guestAadhar$i"]) ? $_POST["guestAadhar$i"] : "";       //Else the empty string is stored 
     }
 
-    // Construct the SQL query
-    $query = "INSERT INTO Tickets (TicketID, NumberOfGuests, NumberOfAdults, NumberOfChildren, ";
+    $query = "INSERT INTO Tickets (TicketID, NumberOfGuests, NumberOfAdults, NumberOfChildren, ";       // Construct the SQL query
 
-    // Add guest name and Aadhar number fields to the query
     for ($i = 1; $i <= min(5, $totalGuests); $i++) {
-        $query .= "Name$i, Aadhar$i, ";
+        $query .= "Name$i, Aadhar$i, ";                         // Add guest name and Aadhar number fields to the query
     }
 
-    // Complete the SQL query
-    $query .= "Price, PlatformNumber) VALUES ($ticketID, $totalGuests, ($totalGuests - $numChildren), $numChildren, ";
+    $query .= "Price, PlatformNumber) VALUES ($ticketID, $totalGuests, ($totalGuests - $numChildren), $numChildren, ";      // Complete the SQL query
 
-    // Add guest names and Aadhar numbers to the query
-    for ($i = 0; $i < min(5, $totalGuests); $i++) {
-        $query .= "'{$guestNames[$i]}', '{$aadharNumbers[$i]}', ";
+    for ($i = 0; $i < min(5, $totalGuests); $i++) {             // Add guest names and Aadhar numbers to the query
+        $query .= "'{$guestNames[$i]}', '{$aadharNumbers[$i]}', ";  
     }
 
-    // Add ticket price and platform number to the query
-    $query .= "$ticketPrice, $platformNumber)";
+    $query .= "$ticketPrice, $platformNumber)";                 // Add ticket price and platform number to the query
 
-    // Execute the query
-    $result = mysqli_query($con, $query);
-
-    // Check if query was successful
-    if ($result) {
+    $result = mysqli_query($con, $query);                       // Execute the query
+    
+    if ($result) {                                              // Check if query was successful
         echo "Ticket successfully added to the database.";
     } else {
         echo "Error: " . mysqli_error($con);
     }
 }
 ?>
+
 
 
 
@@ -92,10 +86,6 @@ if (isset($_POST["submit"])) {
                 <input type="integer" id="numChildren" name="numChildren" min="0" style="width: calc(50% - 20px);">
             </div>
             <div class="guest-input">
-                <label for="GuestNumber">Number of guests:</label>
-                <input type="integer" id="GuestNumber" name="GuestNumber" min="0" style="width: calc(50% - 20px);" default="0">
-            </div>
-            <div class="guest-input">
                 <label for="platformNumber">Platform Number:</label>
                 <input type="text" id="platformNumber" name="platformNumber" placeholder="Enter platform number" style="width: calc(50% - 20px);" required>
             </div>
@@ -117,7 +107,7 @@ if (isset($_POST["submit"])) {
                     <label for="guestAadhar${guestCount}">Aadhar Number:</label>
                     <input type="text" id="guestAadhar${guestCount}" name="guestAadhar${guestCount}" placeholder="Enter Aadhar number" required>
                     <button type="button" onclick="addGuest()" ${guestCount === 5 ? 'disabled' : ''}>Add Guest</button>             
-                    <button type="button" onclick="removeGuest(this)">Remove Guest</
+                    <button type="button" onclick="removeGuest(this)">Remove Guest</button>
                     <hr>
                 `;                //{guestCount === 5 ? 'disabled' : ''} -> Checks if the guest count is greater than 5 button is disabled 
                 document.getElementById("guestForm").insertBefore(guestDiv, document.getElementById("numChildren").parentElement);      //inserting the DOM element guestDiv before numChildren
@@ -131,6 +121,24 @@ if (isset($_POST["submit"])) {
                 guestCount--;
             }
         }
+
+        document.getElementById("guestForm").addEventListener("submit", function(event) {
+            event.preventDefault();                                         // Prevent default form submission
+
+            let formData = new FormData(this);                              // Create FormData object to send form data
+            formData.append("guestCount", guestCount);                      // Add guest count to the form data
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "", true);                                     // Send the form data using XMLHttpRequest
+            xhr.onload = function() {
+                if (xhr.status === 200) {                                   //If data is received by server properly 
+                    alert("Ticket successfully added to the database.");
+                } else {
+                    alert("Error: " + xhr.responseText);
+                }
+            };
+            xhr.send(formData);                                             //Actually sending the form data to server 
+        });
     </script>
 </body>
 </html>
