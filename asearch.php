@@ -6,11 +6,11 @@
         $ticket_date = $_POST["ticket_date"];
 
         if (!empty($ticket_id) && !empty($ticket_date)) {
-            $query = "SELECT * FROM Tickets WHERE TicketID = $ticket_id AND TicketDate = '$ticket_date'";   //If both ticketID and the ticketDate is given 
+            $query = "SELECT * FROM Tickets WHERE TicketID = $ticket_id AND TicketDate >= '$ticket_date'";   //If both ticketID and the ticketDate is given 
         } elseif (!empty($ticket_id)) {
             $query = "SELECT * FROM Tickets WHERE TicketID = $ticket_id";                                   //If only ticketID is given
         } elseif (!empty($ticket_date)) {
-            $query = "SELECT * FROM Tickets WHERE TicketDate = '$ticket_date'";                             //If only ticketDate is given
+            $query = "SELECT * FROM Tickets WHERE TicketDate >= '$ticket_date'";                             //If only ticketDate is given
         } else {
             $query = "SELECT * FROM Tickets";                                                               //If no input is given
         }
@@ -38,9 +38,9 @@
         <span class="title">My Train</span>
         <a href="search.php">Search</a>
         <a href="#" class="active">Advanced Search</a>
+        <a href="statistics.php">Statistics</a>
     </div>
     
-
     <div class="search-container">
         <form action="asearch.php" method="post">
             <input type="text" name="ticket_id" placeholder="Enter Ticket ID">                                  <!--input for TicketID-->
@@ -49,16 +49,44 @@
         </form>
     </div>
 
-    
     <?php
         if (isset($result) && mysqli_num_rows($result) > 0) {
             echo '<table>';
-            echo '<tr><th>Ticket ID</th><th>Number of Guests</th><th>Number of children</th><th>Price</th><th>Ticket Date</th><th>Platform Number</th></tr>';
+            echo '<tr>
+                    <th>Ticket ID</th>
+                    <th>Number of Guests</th>
+                    <th>Number of Adults</th>
+                    <th>Number of Children</th>
+                    <th>Name 1</th>
+                    <th>Name 2</th>
+                    <th>Name 3</th>
+                    <th>Name 4</th>
+                    <th>Name 5</th>
+                    <th>Aadhar 1</th>
+                    <th>Aadhar 2</th>
+                    <th>Aadhar 3</th>
+                    <th>Aadhar 4</th>
+                    <th>Aadhar 5</th>
+                    <th>Price</th>
+                    <th>Ticket Date</th>
+                    <th>Platform Number</th>
+                  </tr>';
             while ($row = mysqli_fetch_assoc($result)) {
                 echo '<tr>';
                 echo '<td>' . $row['TicketID'] . '</td>';
                 echo '<td>' . $row['NumberOfGuests'] . '</td>';
+                echo '<td>' . $row['NumberOfAdults'] . '</td>';
                 echo '<td>' . $row['NumberOfChildren'] . '</td>';
+                echo '<td>' . $row['Name1'] . '</td>';
+                echo '<td>' . $row['Name2'] . '</td>';
+                echo '<td>' . $row['Name3'] . '</td>';
+                echo '<td>' . $row['Name4'] . '</td>';
+                echo '<td>' . $row['Name5'] . '</td>';
+                echo '<td>' . $row['Aadhar1'] . '</td>';
+                echo '<td>' . $row['Aadhar2'] . '</td>';
+                echo '<td>' . $row['Aadhar3'] . '</td>';
+                echo '<td>' . $row['Aadhar4'] . '</td>';
+                echo '<td>' . $row['Aadhar5'] . '</td>';
                 echo '<td>' . $row['Price'] . '</td>';
                 echo '<td>' . $row['TicketDate'] . '</td>';
                 echo '<td>' . $row['PlatformNumber'] . '</td>';
