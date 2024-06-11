@@ -2,7 +2,7 @@
     $con = mysqli_connect("localhost", "root", "guna", "train");
     if (isset($_POST["search"])) {
         $platform_number = $_POST["platform_number"];
-        $query = "SELECT * FROM tickets WHERE platformnumber = $platform_number";               /* records with platform Number as input is retrieved  */
+        $query = "SELECT * FROM tickets WHERE PlatformNumber = $platform_number";               /* records with platform Number as input is retrieved  */
         $result = mysqli_query($con, $query);
     }
 ?>
@@ -20,18 +20,29 @@
             font-family: Arial, sans-serif;
         }
     </style>
+    <script>
+         function validateForm() {
+            var platformNumber = document.getElementById("platform_number").value;
+            if (platformNumber === "") {
+                alert("Please enter a platform number");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body>
     <div class="navbar">
         <span class="title">My Train</span>
         <a href="#" class="active">Search</a>
         <a href="asearch.php">Advanced Search</a>
+        <a href="statistics.php">Statistics</a>
     </div>
     
 
     <div class="search-container">
-        <form action="search.php" method="post">
-            <input type="text" name="platform_number" placeholder="Enter Platform Number">              <!--input for platform number-->          
+        <form action="search.php" method="post" onsubmit="return validateForm()">
+            <input type="text" name="platform_number" id="platform_number" placeholder="Enter Platform Number">              <!--input for platform number-->          
             <button type="submit" name="search">Search</button>                                         
         </form>
     </div>
