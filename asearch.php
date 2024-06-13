@@ -26,6 +26,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>My Train</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>         <!-- Library for Excel Download  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>  <!-- Save the File -->
+
     <style>
         body {
             margin: 0;
@@ -51,7 +54,7 @@
 
     <?php
         if (isset($result) && mysqli_num_rows($result) > 0) {
-            echo '<table>';
+            echo '<table id="myTable">';
             echo '<tr>
                     <th>Ticket ID</th>
                     <th>Number of Guests</th>
@@ -98,5 +101,22 @@
         }
     ?>
     <button class="button-65" style="position:fixed;top:90%;right:4%;" onclick="location.href='home.html'">Log Out</button>
+    <button class="button-65" style="position:fixed;top:90%;left:4%;" onclick="DownloadExcel()">Download</button>
+    <script>
+        function DownloadExcel(){                                                             //Convert the HTML table to Excel workbook
+            var table = document.getElementById("myTable");
+            var workbook = XLSX.utils.table_to_book(table,{sheet:"Sheet1"});
+            var workbookOut = XLSX.write(workbook,{bookType:'xlsx',type:'binary'});            //Write the data into file in Binary format 
+
+            function s2ab(s){                                                                  //Convert Binary to ArrayBuffer
+                var buf = new ArrayBuffer(s.length);
+                var view = new Uint8Array(buf);
+                for(var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                return buf;
+            }
+
+            saveAs(new Blob([s2ab(workbookOut)],{type:"application/octet-stream"}),'Train.xlsx');   //Saves the excel file
+        }
+    </script>
 </body>
 </html>
