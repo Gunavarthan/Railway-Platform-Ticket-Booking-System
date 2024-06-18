@@ -37,8 +37,20 @@
                 $query = "SELECT * FROM pnr WHERE PNR='$PNR'";                   //selecting rows with same PNR value
                 $result = mysqli_query($con, $query);
 
-                if (mysqli_num_rows($result) > 0) {
-                    echo "<script>window.location.href='ticketinput.php';</script>";    //if Result rows is greater than 0 then Redirect to Next Page
+                if (mysqli_num_rows($result) > 0) {                                                 //if Result rows is greater than 0 then Redirect to Next Page
+                    $row = mysqli_fetch_assoc($result);
+
+                    $Today = date('Y-m-d');                         //Current date
+                    $CurrTime = strtotime(date('H:i:s'));           //Current Time
+                    $travelTime = strtotime($row['TravelTime']);    //time of travel
+                    $validTime = $travelTime - 4 * 3600;            //Four hours before travel
+
+                    if($row['TravelDate'] == $Today && $CurrTime >= $validTime && $CurrTime <= $travelTime ){                 //PNR with Date as same and time just 4hs before the travel time are permitted 
+                        echo "<script>window.location.href='ticketinput.php';</script>";         
+                    } 
+                    else{
+                        echo "<div class='alert'>PNR schedule mismatch </div>";    
+                    }
                 } else {
                     echo "<div class='alert'>PNR not found</div>";              //Else return a Error Message
                 }
