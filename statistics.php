@@ -111,12 +111,12 @@ if(isset($_GET['get_json'])){
             font-size: 16px;
         }
         .chart-container {
-            width: 80%; /* Adjust the width as needed */
-            margin: 0 auto; /* Center align the chart container */
+            width: 80%; 
+            margin: 0 auto;
         }
         #chart {
-            max-height: 800px; /* Maximum height of the chart */
-            width: 100%; /* Full width of the chart container */
+            max-height: 800px;
+            width: 100%; 
         }
         @media (max-width: 1200px) {
             .chart-container {
@@ -128,16 +128,28 @@ if(isset($_GET['get_json'])){
                 width: 100%;
             }
             #chart {
-                max-height: 600px; /* Reduce max-height for smaller screens */
+                max-height: 600px; 
             }
         }
         @media (max-width: 600px) {
             #chart {
-                max-height: 400px; /* Further reduce max-height for mobile devices */
+                max-height: 400px; 
             }
         }
         .hidden {
             display: none;
+        }
+        .total-info {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
 </head>
@@ -147,6 +159,7 @@ if(isset($_GET['get_json'])){
         <a href="search.php">Search</a>
         <a href="asearch.php">Advanced Search</a>
         <a href="#" class="active">Statistics</a>
+        <a href="transaction.php" >Transaction</a>
     </div>
 
     <div class="search-container">
@@ -160,6 +173,8 @@ if(isset($_GET['get_json'])){
     <?php
         if (isset($result) && mysqli_num_rows($result) > 0) {
             $total_price = 0;
+            $total_guests = 0;
+            $total_children = 0;
             echo '<table>';
             echo '<tr><th>Ticket ID</th><th>Number of Guests</th><th>Number of Children</th><th>Price</th><th>Ticket Date</th><th>Platform Number</th></tr>';
             while ($row = mysqli_fetch_assoc($result)) {
@@ -167,25 +182,31 @@ if(isset($_GET['get_json'])){
                 echo '<td>' . $row['TicketID'] . '</td>';
                 echo '<td>' . $row['NumberOfGuests'] . '</td>';
                 echo '<td>' . $row['NumberOfChildren'] . '</td>';
-                echo '<td>' . $row['Price'] . '</td>';
+                echo '<td>₹' . $row['Price'] . '</td>';
                 echo '<td>' . $row['TicketDate'] . '</td>';
                 echo '<td>' . $row['PlatformNumber'] . '</td>';
                 echo '</tr>';
                 $total_price += $row['Price'];
+                $total_guests += $row['NumberOfGuests'];
+                $total_children += $row['NumberOfChildren'];
             }
             echo '</table>';
-            echo '<div style="text-align: center; font-size: 24px; margin-top: 20px;">Total Price: ' . $total_price . '</div>';
+            echo '<div class="total-info" style="text-align: center; font-size: 24px; margin-top: 20px;">';
+            echo 'Total Price: ₹' . $total_price . ' &nbsp; &nbsp; &nbsp; ';
+            echo 'Total Guests: ' . $total_guests . ' &nbsp; &nbsp; &nbsp; ';
+            echo 'Total Children: ' . $total_children;
+            echo '</div>';
         } else {
             echo '<div style="color:red;text-align: center; font-size: 24px; margin-top: 20px;">No results found.</div>';
         }
     ?>
 
     <div class="statistics-container">
-        <h3>Platform Number with Maximum Profit</h3>
-        <p>Platform Number: <?php echo $max_platform['platformnumber']; ?>&nbsp;&nbsp;&nbsp;&nbsp;Total Profit: <?php echo $max_platform['total_profit']; ?></p>
+        <h3>Platform Number with Maximum Collection</h3>
+        <p>Platform Number: <?php echo $max_platform['platformnumber']; ?>&nbsp;&nbsp;&nbsp;&nbsp;Total Collection: ₹<?php echo $max_platform['total_profit']; ?></p>
         
-        <h3>Month with Maximum Profit</h3>
-        <p>Month: <?php echo $max_month['month']; ?>&nbsp;&nbsp;&nbsp;&nbsp;Total Profit: <?php echo $max_month['total_profit']; ?></p>
+        <h3>Month with Maximum Collection</h3>
+        <p>Month: <?php echo $max_month['month']; ?>&nbsp;&nbsp;&nbsp;&nbsp;Total Collection: ₹<?php echo $max_month['total_profit']; ?></p>
     </div>
 
     <button class="button-65" id="logoutButton" style="position:fixed;top:90%;right:4%;" onclick="location.href='home.html'">Log Out</button>
