@@ -49,30 +49,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search"])) {
         }
         .hover-info {
             display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            border: 1px solid #ccc;
+            position: absolute;
+            background-color: rgba(0,123,255,0.8);
+            border: 2px solid #f0f0f0;
+            border-radius:10px;
             padding: 20px;
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
-            transition: opacity 0.5s, transform 0.5s;
+            transition: opacity 1s;
             opacity: 0;
             z-index: 1000;
+            height: 200px; 
+            color: white; 
+            overflow: hidden;
         }
         .hover-info.show {
             display: block;
             opacity: 1;
-            transform: translate(-50%, -50%) scale(1.05);
         }
         .hover-info ul {
             list-style-type: none;
             padding: 0;
+            margin: 0;
+        }
+        .cancelled {
+            background-color: #f8d7da;
+            color: #721c24; 
+        }
+        .cancelled td {
+            color: #721c24; 
         }
     </style>
     <script>
-        function validateForm() {                                                           // Validates if INPUTS  are Given
+        function validateForm() {                                                           // Validates if INPUTS are Given
             var platformNumber = document.getElementById("platform_number").value;
             var status = document.getElementById("payment_status").value;
             var junction = document.getElementById("Junction").value;
@@ -83,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search"])) {
             return true;
         }
 
-        function showInfo(names) {                                                  // Display INFO TAB
+        function showInfo(names, event) {                                                  // Display INFO TAB
             var infoDiv = document.getElementById("hover-info");
             var namesList = infoDiv.querySelector("ul");
             namesList.innerHTML = "";
@@ -92,6 +100,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search"])) {
                 li.textContent = name;
                 namesList.appendChild(li);
             });
+
+            var rect = event.target.getBoundingClientRect();                               // Position the hover-info div relative to the hovered td
+            infoDiv.style.top = (rect.bottom + window.scrollY) + "px";
+            infoDiv.style.left = (rect.left + window.scrollX) + "px";
+
             infoDiv.classList.add("show");
         }
 
@@ -107,6 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search"])) {
         <a href="#" class="active">Search</a>
         <a href="asearch.php">Advanced Search</a>
         <a href="statistics.php">Statistics</a>
+        <a href="transaction.php" >Transaction</a>
     </div>
 
     <div class="search-container">
@@ -121,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search"])) {
                 <option value="">Select</option>
                 <option value="SALEM">SALEM</option>
                 <option value="KARUR">KARUR</option>
-                <option value="DINDIGUL">DINDIGIL</option>
+                <option value="DINDIGUL">DINDIGUL</option>
                 <option value="MADURAI">MADURAI</option>
                 <option value="VIRUDHUNAGAR">VIRUDHUNAGAR</option>
                 <option value="COIMBATORE">COIMBATORE</option>
@@ -135,7 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search"])) {
     </div>
 
     <div id="hover-info" class="hover-info">
-        <h4>Names</h4>
+        <u><h4>Names</h4></u>
         <ul></ul>
     </div>
 
@@ -145,12 +159,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search"])) {
             echo '<table>';
             echo '<tr><th>Ticket ID</th><th>Number of Guests</th><th>Number of Children</th><th>Price</th><th>Ticket Date</th><th>Platform Number</th><th>Payment Status</th><th>Junction</th></tr>';
             while ($row = mysqli_fetch_assoc($result)) {
+                $rowClass = ($row['PayStatus'] === 'CANCELLED') ? 'class="cancelled"' : '';
                 $names = implode(",", [$row['Name1'],$row['Aadhar1'],"&nbsp", $row['Name2'],$row['Aadhar2'],"&nbsp", $row['Name3'],$row['Aadhar3'],"&nbsp", $row['Name4'],$row['Aadhar4'],"&nbsp", $row['Name5'],$row['Aadhar5'],"&nbsp"]);  // data for every record
-                echo '<tr>';
-                echo '<td onmouseover="showInfo(\'' . $names . '\')" onmouseout="hideInfo()">' . $row['TicketID'] . '</td>';  // visible --> INFO tab {ON - HOVER}
+                echo '<tr ' . $rowClass . '>';
+                echo '<td onclick="showInfo(\'' . $names . '\', event)" onmouseout="hideInfo()">' . $row['TicketID'] . '</td>';  // visible --> INFO tab {ON - HOVER}
                 echo '<td>' . $row['NumberOfGuests'] . '</td>';
                 echo '<td>' . $row['NumberOfChildren'] . '</td>'; /* Each record is displayed */
-                echo '<td>' . $row['Price'] . '</td>';
+                echo '<td>₹' . $row['Price'] . '</td>';
                 echo '<td>' . $row['TicketDate'] . '</td>';
                 echo '<td>' . $row['PlatformNumber'] . '</td>';
                 echo '<td>' . $row['PayStatus'] . '</td>';
