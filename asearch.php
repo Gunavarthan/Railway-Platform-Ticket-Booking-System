@@ -95,10 +95,11 @@ if (isset($_POST["search"])) {
         <a href="search.php">Search</a>
         <a href="#" class="active">Advanced Search</a>
         <a href="statistics.php">Statistics</a>
+        <a href="transaction.php" >Transaction</a>
     </div>
     
     <div class="search-container">
-        <button onclick="toggleSearchOptions()">Toggle Search Options</button>
+        <button onclick="toggleSearchOptions()">More Options</button>
         <form action="asearch.php" method="post">
             <h5>FROM</h5>
             <input type="date" name="from_date" placeholder="From Date"> <!-- input for From Date -->
@@ -191,6 +192,7 @@ if (isset($_POST["search"])) {
                 <th>Number of Guests</th>
                 <th>Number of Adults</th>
                 <th>Number of Children</th>
+                <th>Junction</th>
                 <th>Name 1</th>
                 <th>Name 2</th>
                 <th>Name 3</th>
