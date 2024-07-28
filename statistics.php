@@ -23,6 +23,27 @@ $max_month_query = "
 $max_month_result = mysqli_query($con, $max_month_query);
 $max_month = mysqli_fetch_assoc($max_month_result);
 
+if (isset($_POST["search"])) {
+    $ticket_date = $_POST["ticket_date"];
+    $platform_number = $_POST["platform_number"];
+    
+    $query = "SELECT * FROM tickets";
+    
+    $conditions = array();
+    if (!empty($ticket_date)) {
+        $conditions[] = "ticketdate = '$ticket_date'";
+    }
+    if (!empty($platform_number)) {
+        $conditions[] = "platformnumber = $platform_number";
+    }
+    
+    if (count($conditions) > 0) {
+        $query .= " WHERE " . implode(' AND ', $conditions);
+    }
+
+    $result = mysqli_query($con, $query);
+}
+
 if(isset($_GET['get_json'])){
     $data_set = $_GET['data_set'];
     $junction = $_GET['junction'];
