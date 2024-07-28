@@ -23,54 +23,40 @@ $max_month_query = "
 $max_month_result = mysqli_query($con, $max_month_query);
 $max_month = mysqli_fetch_assoc($max_month_result);
 
-if (isset($_POST["search"])) {
-    $ticket_date = $_POST["ticket_date"];
-    $platform_number = $_POST["platform_number"];
-    
-    $query = "SELECT * FROM tickets";
-    
-    $conditions = array();
-    if (!empty($ticket_date)) {
-        $conditions[] = "ticketdate = '$ticket_date'";
-    }
-    if (!empty($platform_number)) {
-        $conditions[] = "platformnumber = $platform_number";
-    }
-    
-    if (count($conditions) > 0) {
-        $query .= " WHERE " . implode(' AND ', $conditions);
-    }
-
-    $result = mysqli_query($con, $query);
-}
-
 if(isset($_GET['get_json'])){
     $data_set = $_GET['data_set'];
+    $junction = $_GET['junction'];
     $query = "";
 
     switch ($data_set) {
         case 'TicketCount':
-            $query = "SELECT platformnumber, COUNT(*) as value FROM tickets GROUP BY platformnumber ORDER BY platformnumber";
+            $query = "SELECT platformnumber, COUNT(*) as value FROM tickets";
             break;
         case 'TotalRevenue':
-            $query = "SELECT platformnumber, SUM(price) as value FROM tickets GROUP BY platformnumber ORDER BY platformnumber";
+            $query = "SELECT platformnumber, SUM(price) as value FROM tickets";
             break;
         case 'AveragePrice':
-            $query = "SELECT platformnumber, AVG(price) as value FROM tickets GROUP BY platformnumber ORDER BY platformnumber";
+            $query = "SELECT platformnumber, AVG(price) as value FROM tickets";
             break;
         case 'TotalGuests':
-            $query = "SELECT platformnumber, SUM(NumberOfGuests) as value FROM tickets GROUP BY platformnumber ORDER BY platformnumber";
+            $query = "SELECT platformnumber, SUM(NumberOfGuests) as value FROM tickets";
             break;
         case 'TotalAdults':
-            $query = "SELECT platformnumber, SUM(NumberOfAdults) as value FROM tickets GROUP BY platformnumber ORDER BY platformnumber";
+            $query = "SELECT platformnumber, SUM(NumberOfAdults) as value FROM tickets";
             break;
         case 'TotalChildren':
-            $query = "SELECT platformnumber, SUM(NumberOfChildren) as value FROM tickets GROUP BY platformnumber ORDER BY platformnumber";
+            $query = "SELECT platformnumber, SUM(NumberOfChildren) as value FROM tickets";
             break;
         default:
-            $query = "SELECT platformnumber, COUNT(*) as value FROM tickets GROUP BY platformnumber ORDER BY platformnumber";
+            $query = "SELECT platformnumber, COUNT(*) as value FROM tickets";
             break;
     }
+
+    if (!empty($junction)) {
+        $query .= " WHERE junction = '$junction'";
+    }
+
+    $query .= " GROUP BY platformnumber ORDER BY platformnumber";
 
     $result = mysqli_query($con, $query);
     $data = array();
@@ -105,7 +91,7 @@ if(isset($_GET['get_json'])){
             color: white;
             padding: 20px;
         }
-        #dataSelector {
+        #dataSelector, #junctionSelector {
             margin-bottom: 20px;
             padding: 10px;
             font-size: 16px;
@@ -226,6 +212,21 @@ if(isset($_GET['get_json'])){
             <option value="TotalAdults">Total Adults</option>
             <option value="TotalChildren">Total Children</option>
         </select>
+
+        <label for="junctionSelector">Choose junction:</label>
+        <select id="junctionSelector">
+            <option value="">Select</option>
+            <option value="SALEM">SALEM</option>
+            <option value="KARUR">KARUR</option>
+            <option value="DINDIGUL">DINDIGUL</option>
+            <option value="MADURAI">MADURAI</option>
+            <option value="VIRUDHUNAGAR">VIRUDHUNAGAR</option>
+            <option value="COIMBATORE">COIMBATORE</option>
+            <option value="CHENGAIPATTU">CHENGAIPATTU</option>
+            <option value="TIRUPPUR">TIRUPPUR</option>
+            <option value="ERODE">ERODE</option>
+            <option value="THENI">THENI</option>
+        </select>
     </div>
 
     <script>
@@ -271,11 +272,11 @@ if(isset($_GET['get_json'])){
                 });
 
                 // Fetch initial data when chart is initialized
-                fetchData('TicketCount');
+                fetchData('TicketCount', '');
             }
 
-            function fetchData(option) {
-                fetch(`statistics.php?get_json=1&data_set=${option}`)
+            function fetchData(option, junction) {
+                fetch(`statistics.php?get_json=1&data_set=${option}&junction=${junction}`)
                 .then(response => response.json())
                 .then(data => {
                     const labels = data.map(item => "Platform " + item.platformnumber);
@@ -292,9 +293,15 @@ if(isset($_GET['get_json'])){
             // Event listener for the "Show Graph" button
             document.getElementById('showGraphButton').addEventListener('click', toggleGraph);
 
-            // Event listener for the dropdown
+            // Event listener for the dropdowns
             document.getElementById('dataSelector').addEventListener('change', function() {
-                fetchData(this.value);
+                const junction = document.getElementById('junctionSelector').value;
+                fetchData(this.value, junction);
+            });
+
+            document.getElementById('junctionSelector').addEventListener('change', function() {
+                const dataOption = document.getElementById('dataSelector').value;
+                fetchData(dataOption, this.value);
             });
 
             // Hide or show buttons based on scroll position
