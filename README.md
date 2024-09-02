@@ -70,7 +70,10 @@ The Railway Platform Ticket Booking System is a web-based application that facil
 ***In Progress***
 
 ## Page Flow Diagram 
-***Will be added Later***
+***Will be added Soon***
+
+## Recreate the DataBase
+***Will be added Soon***
 
 ## Team Member's
 - Dharaneesh J
