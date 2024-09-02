@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My train</title>
-    <link rel="stylesheet" href="stylelg.css">
+    <link rel="stylesheet" href="css/stylelg.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,12 +19,13 @@
 </head>
 <body>
     <div class="log-container">
-        <h2>Enter Your PNR</h2>
+        <h2>Enter Your PNR / Ticket Number</h2>
         <form method="POST" action="">
             <div class="form-group">
-                <label for="PNR">PNR:</label>
-                <input type="text" id="PNR" name="PNR" required>                <!--Getting inputs for the PNR-->
+                <label for="PNR">Ticket Number:</label>
+                <input type="text" id="PNR" name="PNR" maxlength="10" required>                <!--Getting inputs for the PNR-->
             </div>
+            <div><b>***Platform Tickets are provided only 2 hours before the Train Arrival time</b></div>
             <div class="form-group">
                 <button type="submit">Submit</button>
             </div>
@@ -51,12 +52,12 @@
 
                     if($row['TravelDate'] == $Today && $CurrTime >= $validTime && $CurrTime <= $validEndTime){                 //PNR with Date as same and time just 2hrs before or 1hr after the travel time are Redirect to Next Page 
                         $query = "insert into tickets (TicketID,pnr,NumberOfGuests,NumberOfAdults,NumberOfChildren,Price,PlatformNumber) values ('UnInit',$PNR,-0101,-0101,-0101,-0101,-0101)";
-                        echo("$CurrTime >= $validTime   $CurrTime <= $validEndTime");
+                        //echo("$CurrTime >= $validTime   $CurrTime <= $validEndTime");
                         mysqli_query($con, $query);
                         echo "<script>window.location.href='ticketinput.php';</script>";         
                     } 
                     else{
-                        echo("$CurrTime >= $validTime   $CurrTime <= $validEndTime");
+                        //echo("$CurrTime >= $validTime   $CurrTime <= $validEndTime");
                         echo "<div class='alert'>PNR schedule mismatch </div>";    
                     }
                 } else {

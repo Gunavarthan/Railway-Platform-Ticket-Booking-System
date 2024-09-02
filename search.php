@@ -44,6 +44,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search"])) {
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+        .search-container input[type="number"]
+        {
+            padding: 10px;
+            margin: 5px;
+            width: 150px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
         #payment_status option {
             padding: 100px;
         }
@@ -64,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search"])) {
         }
         .hover-info.show {
             display: block;
-            opacity: 1;
+            opacity: 3;
         }
         .hover-info ul {
             list-style-type: none;
@@ -120,12 +129,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search"])) {
         <a href="#" class="active">Search</a>
         <a href="asearch.php">Advanced Search</a>
         <a href="statistics.php">Statistics</a>
-        <a href="transaction.php" >Transaction</a>
+        <a href="transaction.php">Transaction</a>
     </div>
 
     <div class="search-container">
         <form action="search.php" method="post" onsubmit="return validateForm()">
-            <input type="text" name="platform_number" id="platform_number" placeholder="Enter Platform Number"> <!-- input for platform number -->
+            <input type="number" name="platform_number" id="platform_number" placeholder="Enter Platform Number"> <!-- input for platform number -->
             <select id="payment_status" name="payment_status">
                 <option value="" disabled selected style="color:white;">Payment Status</option>
                 <option value="Success">Success</option>

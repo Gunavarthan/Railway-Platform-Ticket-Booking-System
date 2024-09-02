@@ -1,0 +1,88 @@
+.log-container {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    width: 100%;
+    max-width: 400px;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+.form-group button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.form-group button:hover {
+    background-color: #0056b3;
+}
+.alert {
+    margin-top: 20px;
+    color: red;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.guest-input {
+    margin-bottom: 10px;
+}
+.guest-input label {
+    display: block;
+    font-weight: bold;
+    padding:5px;
+}
+.guest-input input {
+    width: calc(100% - 20px);
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+.guest-input button {
+    margin-top: 10px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+.guest-input button[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+.guest-input button:hover {
+    background-color: #0056b3;
+}
+.guest-input hr {
+    margin: 10px 0;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+.submit-button {
+    padding:8px 12px;
+    background-color: #28a745;
+}
+.submit-button:hover {
+    background-color: #218838;
+}

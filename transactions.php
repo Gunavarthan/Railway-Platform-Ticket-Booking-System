@@ -1,5 +1,8 @@
 <?php
+    // Establish connection to the MySQL database
     $con = mysqli_connect("localhost", "root", "guna", "train");
+
+    // Initialize variables to keep track of search state and total calculations
     $transactionSearchPerformed = false;
     $totalTransactions = 0;
     $totalAmount = 0.0;
@@ -46,6 +49,7 @@
     </style>
 </head>
 <body>
+    <!-- Navigation bar -->
     <div class="navbar">
         <span class="title">My Train</span>
         <a href="search.php">Search</a>
@@ -54,10 +58,12 @@
         <a href="#" class="active">Transaction</a>
     </div>
 
+    <!-- Info message for the user -->
     <div class="info-message">
         <p>ⓘPlease enter the start and end dates below to view all transactions within that date range.</p>
     </div>
 
+    <!-- Form to search transactions by date range -->
     <div class="search-container">
         <form action="transaction.php" method="post">
             <input type="date" name="date_from" required>
@@ -67,10 +73,13 @@
     </div>
 
     <?php
+        // Check if the form was submitted
         if (isset($_POST["transaction_search"])) {
+            // Get the start and end dates from the form
             $date_from = $_POST["date_from"];
             $date_to = $_POST["date_to"];
 
+            // Query to select transactions within the specified date range
             $transaction_query = "SELECT * FROM tickets WHERE TicketDate BETWEEN '$date_from' AND '$date_to'";
             $transaction_result = mysqli_query($con, $transaction_query);
             $transactionSearchPerformed = true;
@@ -80,9 +89,12 @@
             echo 'Showing transactions from ' . htmlspecialchars($date_from) . ' to ' . htmlspecialchars($date_to) . '.';
             echo '</div>';
 
+            // Check if any results were found
             if (isset($transaction_result) && mysqli_num_rows($transaction_result) > 0) {
                 echo '<table>';
                 echo '<tr><th>Pay ID</th><th>Ticket ID</th><th>Pay Mode</th><th>Date</th><th>Time</th><th>Price</th><th>PNR</th><th>Status</th></tr>';
+
+                // Loop through each transaction and display it in a table row
                 while ($row = mysqli_fetch_assoc($transaction_result)) {
                     $rowClass = ($row['PayStatus'] === 'CANCELLED') ? 'class="cancelled"' : '';
                     
@@ -97,6 +109,7 @@
                     echo '<td>' . $row['PayStatus'] . '</td>';
                     echo '</tr>';
 
+                    // Increment total transactions and amount collected
                     $totalTransactions++;
                     if ($row['PayStatus'] !== 'Cancelled') {
                         $totalAmount += $row['Price'];
@@ -104,15 +117,16 @@
                 }
                 echo '</table>';
 
+                // Display total transactions and amount collected
                 echo '<div class="total-info">';
                 echo 'Total Transactions: ' . $totalTransactions . ' &nbsp; &nbsp; &nbsp; ';
                 echo 'Total Amount Collected: ₹' . $totalAmount;
                 echo '</div>';
             } else {
+                // Display message if no results were found
                 echo '<div style="color:red;text-align: center; font-size: 24px; margin-top: 20px;">No results found.</div>';
             }
         }
     ?>
 </body>
 </html>
-
