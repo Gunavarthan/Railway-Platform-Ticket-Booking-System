@@ -1,5 +1,5 @@
 <?php
-$con = mysqli_connect("localhost", "root", "guna", "train");
+$con = mysqli_connect("localhost", "your username", "your password", "train");
 
 // Query to get platform number with maximum profit
 $max_platform_query = "
