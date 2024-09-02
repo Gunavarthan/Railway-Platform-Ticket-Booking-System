@@ -4,6 +4,14 @@
 
 The Railway Platform Ticket Booking System is a web-based application that facilitates the booking and management of railway platform tickets. The application has two primary modes: User Mode and Admin Mode, each offering different functionalities tailored to specific users.
 
+## Technologies Used
+- **HTML5**
+- **CSS3**
+- **MySQL**
+- **Ajax**
+- **PHP (QRcode)**
+- **JavaScript (Chart JS)**
+
 ## Features
 
 ### Home Page
