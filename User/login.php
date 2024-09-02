@@ -32,8 +32,7 @@
         </form>
         <?php
             date_default_timezone_set('Asia/Kolkata');                         //defining the TimeZone
-            $con = mysqli_connect("localhost", "root", "guna", "train");
-
+            $con = mysqli_connect("localhost", "your username", "your password", "train");
             if (isset($_POST["PNR"])) {
                 $PNR = mysqli_real_escape_string($con, $_POST["PNR"]);
                 $query = "delete from tickets where TicketID = 'UnInit'";       //Checks for non initialized records and delete 
