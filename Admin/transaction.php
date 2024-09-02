@@ -1,5 +1,5 @@
 <?php
-    $con = mysqli_connect("localhost", "root", "guna", "train");
+    $con = mysqli_connect("localhost", "your username", "your password", "train");
     $transactionSearchPerformed = false;
     $totalTransactions = 0;
     $totalAmount = 0.0;
