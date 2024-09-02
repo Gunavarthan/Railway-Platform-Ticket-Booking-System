@@ -1,5 +1,5 @@
 <?php
-$con = mysqli_connect("localhost", "root", "guna", "train");
+$con = mysqli_connect("localhost", "your username", "your password", "train");
 
 $query = "SELECT * FROM Tickets";
 if (isset($_POST["search"])) {
