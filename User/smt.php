@@ -6,14 +6,14 @@ $validation_error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' || isset($_GET['action'])) {
     // Connection details for Banking database
     $bankingServername = "localhost";
-    $bankingUsername = "root"; 
-    $bankingPassword = "guna"; // Change pass
+    $bankingUsername = "your username"; 
+    $bankingPassword = "your password"; // Change pass
     $bankingDbname = "Banking";
 
     // Database connection details for Trains database
     $trainsServername = "localhost";
-    $trainsUsername = "root"; 
-    $trainsPassword = "guna"; // Change pass
+    $trainsUsername = "your username"; 
+    $trainsPassword = "your password"; // Change pass
     $trainsDbname = "train";
 
     if (isset($_POST['action']) || isset($_GET['action'])) {
