@@ -1,6 +1,6 @@
 <?php
     // Establish connection to the MySQL database
-    $con = mysqli_connect("localhost", "root", "guna", "train");
+    $con = mysqli_connect("localhost", "your username", "your password", "train");
 
     // Initialize variables to keep track of search state and total calculations
     $transactionSearchPerformed = false;
