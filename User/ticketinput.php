@@ -1,7 +1,7 @@
 <?php
 // Database connection
-$con = mysqli_connect("localhost", "root", "guna", "train");
-$aadhar_con = mysqli_connect("localhost", "root", "guna", "aadhar");
+$con = mysqli_connect("localhost", "your username", "your password", "train");
+$aadhar_con = mysqli_connect("localhost", "your username", "your password", "train");
 
 if (!$con || !$aadhar_con) {
     die("Connection failed: " . mysqli_connect_error());
