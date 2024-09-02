@@ -58,18 +58,14 @@ The Railway Platform Ticket Booking System is a web-based application that facil
 ## User Mode
 *Details to be provided later.*
 
-## Getting Started
+## Video Demo
+***In Progress***
 
-*Instructions on how to set up the project and prerequisites will be added here.*
+## Page Flow Diagram 
+***Will be added Later***
 
-## Usage
-
-*Instructions on how to use the system will be provided here.*
-
-## Contributing
-
-*Guidelines on contributing to the project will be provided here.*
-
-## License
-
-*License information will be added here.*
+## Team Member's
+- Dharaneesh J
+- Atchaya  V  S
+- Varshini  N  P
+- Gunavarthan   S
