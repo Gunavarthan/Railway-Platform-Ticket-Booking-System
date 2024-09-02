@@ -77,3 +77,7 @@ The Railway Platform Ticket Booking System is a web-based application that facil
 - Atchaya  V  S
 - Varshini  N  P
 - Gunavarthan   S
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
