@@ -1,5 +1,5 @@
 <?php
-$con = mysqli_connect("localhost", "root", "guna", "train");
+$con = mysqli_connect("localhost", "your username", "your password", "train");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["Login"])|| isset($_POST["AddAdmin"])) {
     // Fetching user input
