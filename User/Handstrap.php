@@ -16,12 +16,7 @@
         <form action='generateHandStrap.php' method='post'>
             <div class='card-body'>
                 <?php
-                $servername = "localhost";
-                $username = "root";
-                $password = "guna";
-                $dbname = "Train";
-
-                $conn = new mysqli($servername, $username, $password, $dbname);
+                $con = mysqli_connect("localhost", "your username", "your password", "train");
 
                 if ($conn->connect_error) {
                     die("Connection failed: " . $conn->connect_error);
