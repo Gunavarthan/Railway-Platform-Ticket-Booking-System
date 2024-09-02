@@ -1,5 +1,5 @@
 <?php
-$con = mysqli_connect("localhost", "root", "guna", "train");
+$con = mysqli_connect("localhost", "your username", "your password", "train");
 $searchPerformed = false; // Variable to track if a search was performed
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search"])) {
