@@ -1,7 +1,6 @@
 <?php
 // Create connection
-$conn = mysqli_connect('localhost','root','guna','Train');
-
+$con = mysqli_connect("localhost", "your username", "your password", "train");
 // Check connection
 if (mysqli_connect_errno()) {
     die("Connection failed: " . mysqli_connect_error());
