@@ -1,4 +1,4 @@
-# Railway Platform Ticket Booking System
+# 🚆 Railway Platform Ticket Booking System
 
 ## Overview
 
@@ -66,7 +66,7 @@ The Railway Platform Ticket Booking System is a web-based application that facil
 ## User Mode
 *Details to be provided later.*
 
-## Video Demo
+## 🎥 Video Demo
 ***In Progress***
 
 ## Page Flow Diagram 
@@ -75,12 +75,12 @@ The Railway Platform Ticket Booking System is a web-based application that facil
 ## Recreate the DataBase
 ***Will be added Soon***
 
-## Team Member's
+## 🎗️ Team Member's
 - Dharaneesh J
 - Atchaya  V  S
 - Varshini  N  P
 - Gunavarthan   S
 
-## License
+## 📜 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) file for more details.
