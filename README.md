@@ -1,24 +1,24 @@
 # 🚆 Railway Platform Ticket Booking System
 
-## Overview
+## 🧐 Overview
 
 The Railway Platform Ticket Booking System is a web-based application that facilitates the booking and management of railway platform tickets. The application has two primary modes: User Mode and Admin Mode, each offering different functionalities tailored to specific users.
 
-## Technologies Used
+## 🤖 Technologies Used
 - **HTML5**
 - **CSS3**
-- **MySQL**
+- **🛢MySQL**
 - **Ajax**
-- **PHP (QRcode)**
-- **JavaScript (Chart JS)**
+- **🐘 PHP (QRcode)**
+- **｡🇯‌🇸‌ JavaScript (Chart JS)**
 
-## Features
+## ⚙️ Features
 
 ### Home Page
 - **User Mode**: Provides access to the user interface for booking platform tickets.
 - **Admin Mode**: Allows admins to log in and manage the platform ticketing system.
 
-### Admin Mode
+### 🛡️ Admin Mode
 
 #### Admin Login
 - **Admin Authentication**: Requires admin name and password for access.
@@ -63,16 +63,54 @@ The Railway Platform Ticket Booking System is a web-based application that facil
   - Total transactions
   - Total amount collected within the specified date range.
 
-## User Mode
-*Details to be provided later.*
+## 🙍🏻‍♂️ User Mode
+#### PNR Validation
+- **User Prompt**: Users will be prompted to enter the PNR of the passenger they are accompanying.
+- **PNR Existence**: Validation to check if the PNR exists in the system.
+- **Travel Date Verification**: Ensures the passenger has a train journey scheduled for today.
+- **Additional Checks**: Further validations may be performed to ensure the PNR is valid for booking.
+
+#### Guest Details Entry
+- **Input Fields**: Users must enter details such as:
+  - Name
+  - Aadhar Number
+  - Phone Number
+  - Number of Children
+  - Junction
+  - Platform Number
+  - Secondary Contact Number
+- **Aadhar Verification**: Aadhar is verified for safety measures.
+- **Guest Limit**: A maximum of 5 guests, including children, can be added per ticket (Add & Remove functionality).
+
+#### Payment and Ticket Generation
+- **Payment Options**: After entering guest details, users are provided with payment options, and the total price is displayed.
+- **Cancel Option**: Users can cancel the payment if needed.
+- **Payment Authentication**: Users must enter a valid ID and Password to proceed with the payment.
+- **Ticket Generation**: Upon successful payment, the ticket is generated with the following details:
+  - Ticket ID
+  - Ticket Date
+  - Time
+  - Validity End Time
+  - Junction
+  - Platform Number
+  - Passenger’s PNR
+  - Number of Guests
+  - Number of Children
+  - Number of Adults
+  - Price
+  - QR-Code (for a digital copy when scanned)
+
+#### Additional Features
+- **Hand Strap Option**: Users can opt for a hand strap, which is useful if the passenger is disabled or for children.
+- **Print and Logout**: After generating the ticket/hand straps, users can print them and log out.
 
 ## 🎥 Video Demo
 ***In Progress***
 
-## Page Flow Diagram 
+## ╰┈➤ Page Flow Diagram 
 ![flowchart](https://github.com/user-attachments/assets/0fdc431b-7870-4fdb-a4d2-a8d9653f75fc)
 
-## Recreate the DataBase
+## 🛢 Recreate the DataBase
 ***Will be added Soon***
 
 ## 🎗️ Team Member's
