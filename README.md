@@ -79,7 +79,7 @@ The Railway Platform Ticket Booking System is a web-based application that facil
   - Junction
   - Platform Number
   - Secondary Contact Number
-- **Aadhar Verification**: Aadhar is verified for safety measures.
+- **Aadhar Verification**: Aadhar is verified for safety measures and the aadhar number must be in 12 digits.
 - **Guest Limit**: A maximum of 5 guests, including children, can be added per ticket (Add & Remove functionality).
 
 #### Payment and Ticket Generation
